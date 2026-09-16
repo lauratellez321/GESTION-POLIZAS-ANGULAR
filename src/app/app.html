@@ -1,18 +1,5 @@
 <div class="app-shell">
-  <aside class="sidebar">
-    <div class="brand">
-      <span class="brand-mark">P</span>
-      <div>
-        <strong>Poliza</strong>
-        <small>Panel de gestión</small>
-      </div>
-    </div>
-    <div class="nav-item active"><span class="nav-icon">▦</span> Pólizas</div>
-    <div class="sidebar-foot">
-      <span class="status-dot"></span>
-      API local · Spring Boot
-    </div>
-  </aside>
+  <app-sidebar />
 
   <main class="main-content">
     <header class="topbar">
@@ -50,244 +37,28 @@
       </div>
     }
 
-    <section class="stats" aria-label="Resumen de pólizas">
-      <div class="stat-card">
-        <div class="stat-icon icon-blue">▤</div>
-        <div>
-          <span>Total de pólizas</span><strong>{{ polizas().length }}</strong>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon icon-green">✓</div>
-        <div>
-          <span>Activas o renovadas</span><strong>{{ vigentes() }}</strong>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon icon-purple">⌂</div>
-        <div>
-          <span>Colectivas</span><strong>{{ colectivas() }}</strong>
-        </div>
-      </div>
-    </section>
+    <app-policy-summary [polizas]="polizas()" />
 
     <div class="workspace">
-      <section class="panel list-panel" aria-labelledby="list-title">
-        <div class="panel-heading">
-          <div>
-            <h2 id="list-title">Listado</h2>
-            <p>Selecciona una póliza para ver sus detalles.</p>
-          </div>
-          <button
-            type="button"
-            class="refresh-button"
-            (click)="cargarPolizas()"
-            [disabled]="cargando()"
-            aria-label="Actualizar listado"
-          >
-            ↻
-          </button>
-        </div>
-
-        <div class="filters">
-          <label>
-            Tipo
-            <select [(ngModel)]="tipoFiltro" (change)="cargarPolizas()">
-              <option value="">Todos</option>
-              <option value="INDIVIDUAL">Individual</option>
-              <option value="COLECTIVA">Colectiva</option>
-            </select>
-          </label>
-          <label>
-            Estado
-            <select [(ngModel)]="estadoFiltro" (change)="cargarPolizas()">
-              <option value="">Todos</option>
-              <option value="VIGENTE">Vigente</option>
-              <option value="RENOVADA">Renovada</option>
-              <option value="CANCELADA">Cancelada</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="policy-list">
-          @if (cargando()) {
-            <div class="empty-state">Cargando pólizas...</div>
-          } @else if (polizas().length === 0) {
-            <div class="empty-state">No hay pólizas para los filtros seleccionados.</div>
-          } @else {
-            @for (poliza of polizas(); track poliza.id) {
-              <button
-                type="button"
-                class="policy-row"
-                [class.selected]="seleccionada()?.id === poliza.id"
-                (click)="seleccionar(poliza)"
-              >
-                <span class="policy-avatar" [class.collective]="poliza.tipo === 'COLECTIVA'">{{
-                  poliza.tipo === 'COLECTIVA' ? 'C' : 'I'
-                }}</span>
-                <span class="policy-main">
-                  <strong>Póliza #{{ poliza.id }}</strong>
-                  <small
-                    >{{ poliza.tipo === 'COLECTIVA' ? 'Colectiva' : 'Individual' }} ·
-                    {{ dinero(poliza.canonMensual) }}/mes</small
-                  >
-                </span>
-                <span
-                  class="badge"
-                  [class.badge-green]="poliza.estado === 'VIGENTE'"
-                  [class.badge-blue]="poliza.estado === 'RENOVADA'"
-                  [class.badge-gray]="poliza.estado === 'CANCELADA'"
-                >
-                  {{ poliza.estado }}
-                </span>
-                <span class="chevron">›</span>
-              </button>
-            }
-          }
-        </div>
-      </section>
-
-      <section class="panel detail-panel" aria-labelledby="detail-title">
-        @if (seleccionada(); as poliza) {
-          <div class="panel-heading detail-heading">
-            <div>
-              <p class="eyebrow">DETALLE DE PÓLIZA</p>
-              <h2 id="detail-title">Póliza #{{ poliza.id }}</h2>
-            </div>
-            <span
-              class="badge"
-              [class.badge-green]="poliza.estado === 'VIGENTE'"
-              [class.badge-blue]="poliza.estado === 'RENOVADA'"
-              [class.badge-gray]="poliza.estado === 'CANCELADA'"
-            >
-              {{ poliza.estado }}
-            </span>
-          </div>
-
-          <div class="detail-grid">
-            <div>
-              <span>Tipo</span
-              ><strong>{{ poliza.tipo === 'COLECTIVA' ? 'Colectiva' : 'Individual' }}</strong>
-            </div>
-            <div>
-              <span>Canon mensual</span><strong>{{ dinero(poliza.canonMensual) }}</strong>
-            </div>
-            <div>
-              <span>Prima</span><strong>{{ dinero(poliza.prima) }}</strong>
-            </div>
-            <div>
-              <span>Duración</span><strong>{{ poliza.mesesVigencia }} meses</strong>
-            </div>
-            <div>
-              <span>Inicio</span><strong>{{ fecha(poliza.inicioVigencia) }}</strong>
-            </div>
-            <div>
-              <span>Fin</span><strong>{{ fecha(poliza.finVigencia) }}</strong>
-            </div>
-          </div>
-
-          <div class="section-divider"></div>
-          <div class="section-heading">
-            <h3>Riesgos</h3>
-            <span>{{ riesgos().length }}</span>
-          </div>
-          <div class="risk-list">
-            @for (riesgo of riesgos(); track riesgo.id) {
-              <div class="risk-row">
-                <div class="risk-icon">⌂</div>
-                <div class="risk-description">
-                  <strong>{{ riesgo.descripcion }}</strong>
-                  <small
-                    >Riesgo #{{ riesgo.id }} ·
-                    {{ riesgo.estado === 'ACTIVO' ? 'Activo' : 'Cancelado' }}</small
-                  >
-                </div>
-                @if (riesgo.estado === 'ACTIVO' && poliza.estado !== 'CANCELADA') {
-                  <button
-                    type="button"
-                    class="text-danger"
-                    (click)="cancelarRiesgo(riesgo)"
-                    [disabled]="guardando()"
-                  >
-                    Cancelar
-                  </button>
-                }
-              </div>
-            } @empty {
-              <p class="muted">Esta póliza no tiene riesgos registrados.</p>
-            }
-          </div>
-
-          @if (poliza.tipo === 'COLECTIVA' && poliza.estado !== 'CANCELADA') {
-            <form class="inline-form" (ngSubmit)="agregarRiesgo()">
-              <label for="new-risk">Agregar riesgo</label>
-              <div>
-                <input
-                  id="new-risk"
-                  name="descripcion"
-                  type="text"
-                  placeholder="Ej. Apartamento 302"
-                  [(ngModel)]="nuevaDescripcion"
-                  required
-                />
-                <button
-                  type="submit"
-                  class="button button-secondary"
-                  [disabled]="guardando() || !nuevaDescripcion.trim()"
-                >
-                  Agregar
-                </button>
-              </div>
-            </form>
-          }
-
-          @if (poliza.estado !== 'CANCELADA') {
-            <div class="section-divider"></div>
-            <div class="section-heading"><h3>Acciones</h3></div>
-            <form class="renew-form" (ngSubmit)="renovar()">
-              <div>
-                <label for="ipc">Renovar con IPC (%)</label>
-                <p>Se actualizarán el canon, la prima y el periodo de vigencia.</p>
-              </div>
-              <div class="renew-controls">
-                <input
-                  id="ipc"
-                  name="ipc"
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                  placeholder="Ej. 5.2"
-                  [(ngModel)]="ipcPorcentaje"
-                  required
-                />
-                <button
-                  type="submit"
-                  class="button button-primary"
-                  [disabled]="guardando() || ipcPorcentaje === null"
-                >
-                  Renovar
-                </button>
-              </div>
-            </form>
-            <button
-              type="button"
-              class="cancel-policy"
-              (click)="cancelarPoliza()"
-              [disabled]="guardando()"
-            >
-              Cancelar póliza
-            </button>
-          }
-        } @else {
-          <div class="detail-empty">
-            <div class="detail-empty-icon">▤</div>
-            <h2 id="detail-title">Selecciona una póliza</h2>
-            <p>Elige una póliza del listado para consultar sus riesgos y realizar acciones.</p>
-          </div>
-        }
-      </section>
+      <app-policy-list
+        [polizas]="polizas()"
+        [selectedId]="seleccionada()?.id ?? null"
+        [loading]="cargando()"
+        (filtersChanged)="aplicarFiltros($event)"
+        (refresh)="cargarPolizas()"
+        (select)="seleccionar($event)"
+      />
+      <app-policy-detail
+        [poliza]="seleccionada()"
+        [riesgos]="riesgos()"
+        [guardando]="guardando()"
+        (renovar)="renovar($event)"
+        (cancelarPoliza)="cancelarPoliza()"
+        (agregarRiesgo)="agregarRiesgo($event)"
+        (cancelarRiesgo)="cancelarRiesgo($event)"
+      />
     </div>
+
     <footer>Gestión de pólizas · Entorno local de desarrollo</footer>
   </main>
 </div>

@@ -1,0 +1,140 @@
+<section class="panel detail-panel" aria-labelledby="detail-title">
+  @if (poliza(); as actual) {
+    <div class="panel-heading detail-heading">
+      <div>
+        <p class="eyebrow">DETALLE DE PÓLIZA</p>
+        <h2 id="detail-title">Póliza #{{ actual.id }}</h2>
+      </div>
+      <span
+        class="badge"
+        [class.badge-green]="actual.estado === 'VIGENTE'"
+        [class.badge-blue]="actual.estado === 'RENOVADA'"
+        [class.badge-gray]="actual.estado === 'CANCELADA'"
+      >
+        {{ actual.estado }}
+      </span>
+    </div>
+
+    <div class="detail-grid">
+      <div>
+        <span>Tipo</span
+        ><strong>{{ actual.tipo === 'COLECTIVA' ? 'Colectiva' : 'Individual' }}</strong>
+      </div>
+      <div>
+        <span>Canon mensual</span><strong>{{ dinero(actual.canonMensual) }}</strong>
+      </div>
+      <div>
+        <span>Prima</span><strong>{{ dinero(actual.prima) }}</strong>
+      </div>
+      <div>
+        <span>Duración</span><strong>{{ actual.mesesVigencia }} meses</strong>
+      </div>
+      <div>
+        <span>Inicio</span><strong>{{ fecha(actual.inicioVigencia) }}</strong>
+      </div>
+      <div>
+        <span>Fin</span><strong>{{ fecha(actual.finVigencia) }}</strong>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+    <div class="section-heading">
+      <h3>Riesgos</h3>
+      <span>{{ riesgos().length }}</span>
+    </div>
+    <div class="risk-list">
+      @for (riesgo of riesgos(); track riesgo.id) {
+        <div class="risk-row">
+          <div class="risk-icon">⌂</div>
+          <div class="risk-description">
+            <strong>{{ riesgo.descripcion }}</strong>
+            <small
+              >Riesgo #{{ riesgo.id }} ·
+              {{ riesgo.estado === 'ACTIVO' ? 'Activo' : 'Cancelado' }}</small
+            >
+          </div>
+          @if (riesgo.estado === 'ACTIVO' && actual.estado !== 'CANCELADA') {
+            <button
+              type="button"
+              class="text-danger"
+              (click)="cancelarRiesgo.emit(riesgo)"
+              [disabled]="guardando()"
+            >
+              Cancelar
+            </button>
+          }
+        </div>
+      } @empty {
+        <p class="muted">Esta póliza no tiene riesgos registrados.</p>
+      }
+    </div>
+
+    @if (actual.tipo === 'COLECTIVA' && actual.estado !== 'CANCELADA') {
+      <form class="inline-form" (ngSubmit)="enviarRiesgo()">
+        <label for="new-risk">Agregar riesgo</label>
+        <div>
+          <input
+            id="new-risk"
+            name="descripcion"
+            type="text"
+            placeholder="Ej. Apartamento 302"
+            [(ngModel)]="nuevaDescripcion"
+            required
+          />
+          <button
+            type="submit"
+            class="button button-secondary"
+            [disabled]="guardando() || !nuevaDescripcion.trim()"
+          >
+            Agregar
+          </button>
+        </div>
+      </form>
+    }
+
+    @if (actual.estado !== 'CANCELADA') {
+      <div class="section-divider"></div>
+      <div class="section-heading"><h3>Acciones</h3></div>
+      <form class="renew-form" (ngSubmit)="enviarRenovacion()">
+        <div>
+          <label for="ipc">Renovar con IPC (%)</label>
+          <p>Se actualizarán el canon, la prima y el periodo de vigencia.</p>
+        </div>
+        <div class="renew-controls">
+          <input
+            id="ipc"
+            name="ipc"
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="Ej. 5.2"
+            [(ngModel)]="ipcPorcentaje"
+            required
+          />
+          <button
+            type="submit"
+            class="button button-primary"
+            [disabled]="guardando() || ipcPorcentaje === null"
+          >
+            Renovar
+          </button>
+        </div>
+      </form>
+      <button
+        type="button"
+        class="cancel-policy"
+        (click)="cancelarPoliza.emit()"
+        [disabled]="guardando()"
+      >
+        Cancelar póliza
+      </button>
+    }
+  } @else {
+    <div class="detail-empty">
+      <div class="detail-empty-icon">▤</div>
+      <h2 id="detail-title">Selecciona una póliza</h2>
+      <p>Elige una póliza del listado para consultar sus riesgos y realizar acciones.</p>
+    </div>
+  }
+</section>

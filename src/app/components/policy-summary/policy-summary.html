@@ -1,0 +1,20 @@
+<section class="stats" aria-label="Resumen de pólizas">
+  <div class="stat-card">
+    <div class="stat-icon icon-blue">▤</div>
+    <div>
+      <span>Total de pólizas</span><strong>{{ polizas().length }}</strong>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon icon-green">✓</div>
+    <div>
+      <span>Activas o renovadas</span><strong>{{ vigentes() }}</strong>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon icon-purple">⌂</div>
+    <div>
+      <span>Colectivas</span><strong>{{ colectivas() }}</strong>
+    </div>
+  </div>
+</section>

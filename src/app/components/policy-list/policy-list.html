@@ -1,0 +1,74 @@
+<section class="panel list-panel" aria-labelledby="list-title">
+  <div class="panel-heading">
+    <div>
+      <h2 id="list-title">Listado</h2>
+      <p>Selecciona una póliza para ver sus detalles.</p>
+    </div>
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="refresh.emit()"
+      [disabled]="loading()"
+      aria-label="Actualizar listado"
+    >
+      ↻
+    </button>
+  </div>
+
+  <div class="filters">
+    <label>
+      Tipo
+      <select [(ngModel)]="tipoFiltro" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option value="INDIVIDUAL">Individual</option>
+        <option value="COLECTIVA">Colectiva</option>
+      </select>
+    </label>
+    <label>
+      Estado
+      <select [(ngModel)]="estadoFiltro" (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option value="VIGENTE">Vigente</option>
+        <option value="RENOVADA">Renovada</option>
+        <option value="CANCELADA">Cancelada</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="policy-list">
+    @if (loading()) {
+      <div class="empty-state">Cargando pólizas...</div>
+    } @else if (polizas().length === 0) {
+      <div class="empty-state">No hay pólizas para los filtros seleccionados.</div>
+    } @else {
+      @for (poliza of polizas(); track poliza.id) {
+        <button
+          type="button"
+          class="policy-row"
+          [class.selected]="selectedId() === poliza.id"
+          (click)="select.emit(poliza)"
+        >
+          <span class="policy-avatar" [class.collective]="poliza.tipo === 'COLECTIVA'">{{
+            poliza.tipo === 'COLECTIVA' ? 'C' : 'I'
+          }}</span>
+          <span class="policy-main">
+            <strong>Póliza #{{ poliza.id }}</strong>
+            <small
+              >{{ poliza.tipo === 'COLECTIVA' ? 'Colectiva' : 'Individual' }} ·
+              {{ dinero(poliza.canonMensual) }}/mes</small
+            >
+          </span>
+          <span
+            class="badge"
+            [class.badge-green]="poliza.estado === 'VIGENTE'"
+            [class.badge-blue]="poliza.estado === 'RENOVADA'"
+            [class.badge-gray]="poliza.estado === 'CANCELADA'"
+          >
+            {{ poliza.estado }}
+          </span>
+          <span class="chevron">›</span>
+        </button>
+      }
+    }
+  </div>
+</section>

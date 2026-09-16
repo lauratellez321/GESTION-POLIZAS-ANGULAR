@@ -1,12 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { PolicyDetail } from './components/policy-detail/policy-detail';
+import { PolicyFilters, PolicyList } from './components/policy-list/policy-list';
+import { PolicySummary } from './components/policy-summary/policy-summary';
+import { Sidebar } from './components/sidebar/sidebar';
 import { EstadoPoliza, Poliza, PolizasApi, Riesgo, TipoPoliza } from './core/polizas-api';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [FormsModule, Sidebar, PolicySummary, PolicyList, PolicyDetail],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -20,16 +24,18 @@ export class App implements OnInit {
   readonly guardando = signal(false);
   readonly mensaje = signal('');
   readonly error = signal('');
-  readonly vigentes = computed(() => this.polizas().filter((p) => p.estado !== 'CANCELADA').length);
-  readonly colectivas = computed(() => this.polizas().filter((p) => p.tipo === 'COLECTIVA').length);
 
-  tipoFiltro: TipoPoliza | '' = '';
-  estadoFiltro: EstadoPoliza | '' = '';
+  private tipoFiltro: TipoPoliza | '' = '';
+  private estadoFiltro: EstadoPoliza | '' = '';
   claveApi = '123456';
-  ipcPorcentaje: number | null = null;
-  nuevaDescripcion = '';
 
   ngOnInit(): void {
+    void this.cargarPolizas();
+  }
+
+  aplicarFiltros(filtros: PolicyFilters): void {
+    this.tipoFiltro = filtros.tipo;
+    this.estadoFiltro = filtros.estado;
     void this.cargarPolizas();
   }
 
@@ -65,17 +71,15 @@ export class App implements OnInit {
     await this.cargarRiesgos(poliza.id);
   }
 
-  async renovar(): Promise<void> {
+  async renovar(ipc: number): Promise<void> {
     const poliza = this.seleccionada();
-    const ipc = this.ipcPorcentaje;
-    if (!poliza || ipc === null || !Number.isFinite(ipc) || ipc < 0 || ipc > 100) {
+    if (!poliza || !Number.isFinite(ipc) || ipc < 0 || ipc > 100) {
       this.error.set('Ingresa un IPC entre 0 y 100.');
       return;
     }
     await this.ejecutar(async () => {
       const actualizada = await firstValueFrom(this.api.renovar(poliza.id, ipc));
       this.reemplazarPoliza(actualizada);
-      this.ipcPorcentaje = null;
       this.mensaje.set(`La póliza #${poliza.id} se renovó correctamente.`);
     });
   }
@@ -92,16 +96,14 @@ export class App implements OnInit {
     });
   }
 
-  async agregarRiesgo(): Promise<void> {
+  async agregarRiesgo(descripcion: string): Promise<void> {
     const poliza = this.seleccionada();
-    const descripcion = this.nuevaDescripcion.trim();
-    if (!poliza || poliza.tipo !== 'COLECTIVA' || !descripcion) {
+    if (!poliza || poliza.tipo !== 'COLECTIVA' || !descripcion.trim()) {
       this.error.set('Escribe una descripción para el riesgo.');
       return;
     }
     await this.ejecutar(async () => {
-      await firstValueFrom(this.api.agregarRiesgo(poliza.id, descripcion));
-      this.nuevaDescripcion = '';
+      await firstValueFrom(this.api.agregarRiesgo(poliza.id, descripcion.trim()));
       await this.cargarRiesgos(poliza.id);
       this.mensaje.set('Riesgo agregado a la póliza.');
     });
@@ -115,19 +117,6 @@ export class App implements OnInit {
       if (poliza) await this.cargarRiesgos(poliza.id);
       this.mensaje.set('Riesgo cancelado.');
     });
-  }
-
-  dinero(valor: number): string {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      maximumFractionDigits: 0,
-    }).format(valor);
-  }
-
-  fecha(valor: string): string {
-    const [anio, mes, dia] = valor.split('-');
-    return `${dia}/${mes}/${anio}`;
   }
 
   private async cargarRiesgos(polizaId: number): Promise<void> {

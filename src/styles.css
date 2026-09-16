@@ -21,3 +21,162 @@ input,
 select {
   font-family: inherit;
 }
+
+.eyebrow {
+  margin: 0 0 9px;
+  color: #6178e5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 7px;
+  color: #17243a;
+  font-size: 34px;
+  letter-spacing: -0.05em;
+}
+
+input,
+select {
+  min-width: 0;
+  width: 100%;
+  height: 39px;
+  padding: 0 12px;
+  border: 1px solid #d8e0ec;
+  border-radius: 8px;
+  background: white;
+  color: #202d43;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #5974eb;
+  box-shadow: 0 0 0 3px #5974eb20;
+}
+
+.button,
+.refresh-button,
+.cancel-policy,
+.text-danger {
+  cursor: pointer;
+  font: inherit;
+}
+
+.button {
+  height: 39px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.button:disabled,
+.refresh-button:disabled,
+.cancel-policy:disabled,
+.text-danger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.button-quiet,
+.button-secondary {
+  background: #edf1ff;
+  color: #3455c6;
+}
+
+.button-primary {
+  background: #4e64e9;
+  color: white;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(420px, 1.1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e7ecf3;
+  box-shadow: 0 5px 22px #24395c08;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.api-key-box label,
+.filters label,
+.inline-form label,
+.renew-form label {
+  display: block;
+  color: #42516a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.api-key-controls,
+.inline-form > div,
+.renew-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 25px 18px;
+}
+
+.panel-heading h2 {
+  margin-bottom: 4px;
+  color: #1a273d;
+  font-size: 19px;
+}
+
+.panel-heading p:not(.eyebrow) {
+  margin: 0;
+  color: #8896a9;
+  font-size: 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 99px;
+  padding: 5px 9px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badge-green {
+  background: #e9f8f1;
+  color: #2a9b6d;
+}
+
+.badge-blue {
+  background: #eaf0ff;
+  color: #5268d3;
+}
+
+.badge-gray {
+  background: #edf0f4;
+  color: #778396;
+}

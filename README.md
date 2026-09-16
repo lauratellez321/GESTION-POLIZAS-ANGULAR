@@ -39,14 +39,23 @@ La API carga dos pólizas de ejemplo al iniciar. Actualmente no ofrece un endpoi
 ```text
 src/
 ├── app/
+│   ├── components/
+│   │   ├── sidebar/
+│   │   ├── policy-summary/
+│   │   ├── policy-list/
+│   │   └── policy-detail/
 │   ├── core/
-│   │   └── polizas-api.ts   # Tipos y llamadas HTTP
-│   ├── app.ts               # Estado y acciones de la pantalla
-│   ├── app.html             # Vista
-│   └── app.css              # Estilos de la vista
-├── proxy.conf.json          # Redirección local a Spring Boot
-└── styles.css               # Estilos generales
+│   │   ├── polizas-api.ts
+│   │   └── polizas-api.spec.ts
+│   ├── app.ts
+│   ├── app.html
+│   ├── app.css
+│   └── app.spec.ts
+├── proxy.conf.json
+└── styles.css
 ```
+
+Cada carpeta de `components/` contiene los cuatro archivos del componente: TypeScript, plantilla HTML, estilos CSS y prueba `spec.ts`. `app` coordina las llamadas y el estado de la pantalla; `core` contiene el acceso HTTP a la API.
 
 ## Compilar
 
@@ -56,7 +65,7 @@ npm run build
 
 El resultado se genera en `dist/frontend/`. La clave `123456` es solo para la prueba local; no debe utilizarse como mecanismo de autenticación en un despliegue público.
 
-Para ejecutar la prueba de la capa HTTP:
+Para ejecutar las pruebas de los componentes y de la capa HTTP:
 
 ```bash
 npm test -- --watch=false
