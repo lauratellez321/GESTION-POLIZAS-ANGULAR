@@ -1,5 +1,5 @@
 <div class="app-shell">
-  <app-sidebar />
+  <app-header />
 
   <main class="main-content">
     <header class="topbar">
@@ -7,20 +7,6 @@
         <p class="eyebrow">GESTIÓN DE ARRENDAMIENTOS</p>
         <h1>Pólizas</h1>
         <p class="subtitle">Consulta y administra la información de tus pólizas.</p>
-      </div>
-      <div class="api-key-box">
-        <label for="api-key">Clave API</label>
-        <div class="api-key-controls">
-          <input id="api-key" type="password" [(ngModel)]="claveApi" autocomplete="off" />
-          <button
-            type="button"
-            class="button button-quiet"
-            (click)="cargarPolizas()"
-            [disabled]="cargando()"
-          >
-            Conectar
-          </button>
-        </div>
       </div>
     </header>
 

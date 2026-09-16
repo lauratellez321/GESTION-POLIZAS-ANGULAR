@@ -27,11 +27,7 @@ export interface Riesgo {
 @Injectable({ providedIn: 'root' })
 export class PolizasApi {
   private readonly http = inject(HttpClient);
-  private apiKey = '123456';
-
-  cambiarClave(valor: string): void {
-    this.apiKey = valor.trim();
-  }
+  private readonly apiKey = '123456';
 
   listar(tipo?: TipoPoliza, estado?: EstadoPoliza): Observable<Poliza[]> {
     let params = new HttpParams();

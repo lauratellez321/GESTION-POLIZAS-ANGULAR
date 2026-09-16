@@ -9,7 +9,7 @@ describe('App', () => {
       providers: [
         {
           provide: PolizasApi,
-          useValue: { cambiarClave: () => {}, listar: () => of([]) },
+          useValue: { listar: () => of([]) },
         },
       ],
     });
@@ -17,6 +17,8 @@ describe('App', () => {
     await fixture.whenStable();
 
     expect(fixture.nativeElement.textContent).toContain('Pólizas');
+    expect(fixture.nativeElement.textContent).not.toContain('Clave API');
+    expect(fixture.nativeElement.textContent).not.toContain('Conectar');
     expect(fixture.nativeElement.textContent).toContain('No hay pólizas');
   });
 });

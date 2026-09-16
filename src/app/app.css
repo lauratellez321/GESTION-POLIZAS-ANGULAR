@@ -4,7 +4,6 @@
 }
 
 .app-shell {
-  display: flex;
   min-height: 100vh;
 }
 
@@ -26,10 +25,6 @@
   margin-bottom: 0;
   color: #697971;
   font-size: 14px;
-}
-
-.api-key-box {
-  min-width: 250px;
 }
 
 .alert {
@@ -86,9 +81,6 @@ footer {
   }
   .topbar {
     flex-direction: column;
-  }
-  .api-key-box {
-    width: 100%;
   }
   .workspace {
     grid-template-columns: minmax(0, 1fr);

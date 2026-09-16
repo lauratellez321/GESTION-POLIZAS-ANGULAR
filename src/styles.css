@@ -115,7 +115,6 @@ select:focus {
   overflow: hidden;
 }
 
-.api-key-box label,
 .filters label,
 .inline-form label,
 .renew-form label {
@@ -125,7 +124,6 @@ select:focus {
   font-weight: 700;
 }
 
-.api-key-controls,
 .inline-form > div,
 .renew-controls {
   display: flex;

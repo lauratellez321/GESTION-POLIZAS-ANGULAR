@@ -22,7 +22,7 @@ npm ci
 npm start
 ```
 
-Abre `http://localhost:4200`. La aplicación usa la clave de prueba `123456`, que también se puede cambiar en el campo **Clave API**. Para desarrollo, Angular redirige las peticiones `/polizas` y `/riesgos` a Spring Boot mediante `src/proxy.conf.json`; por eso no es necesario configurar CORS. Si la API se ejecuta en otro puerto, modifica el destino del proxy y reinicia `npm start`.
+Abre `http://localhost:4200`. La aplicación se conecta automáticamente con la clave de prueba `123456` configurada en el cliente HTTP. Para desarrollo, Angular redirige las peticiones `/polizas` y `/riesgos` a Spring Boot mediante `src/proxy.conf.json`; por eso no es necesario configurar CORS. Si la API se ejecuta en otro puerto, modifica el destino del proxy y reinicia `npm start`.
 
 ## Funciones
 
@@ -40,7 +40,7 @@ La API carga dos pólizas de ejemplo al iniciar. Actualmente no ofrece un endpoi
 src/
 ├── app/
 │   ├── components/
-│   │   ├── sidebar/
+│   │   ├── header/
 │   │   ├── policy-summary/
 │   │   ├── policy-list/
 │   │   └── policy-detail/

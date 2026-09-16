@@ -1,16 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { PolicyDetail } from './components/policy-detail/policy-detail';
 import { PolicyFilters, PolicyList } from './components/policy-list/policy-list';
 import { PolicySummary } from './components/policy-summary/policy-summary';
-import { Sidebar } from './components/sidebar/sidebar';
+import { Header } from './components/header/header';
 import { EstadoPoliza, Poliza, PolizasApi, Riesgo, TipoPoliza } from './core/polizas-api';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, Sidebar, PolicySummary, PolicyList, PolicyDetail],
+  imports: [Header, PolicySummary, PolicyList, PolicyDetail],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -27,7 +26,6 @@ export class App implements OnInit {
 
   private tipoFiltro: TipoPoliza | '' = '';
   private estadoFiltro: EstadoPoliza | '' = '';
-  claveApi = '123456';
 
   ngOnInit(): void {
     void this.cargarPolizas();
@@ -40,7 +38,6 @@ export class App implements OnInit {
   }
 
   async cargarPolizas(): Promise<void> {
-    this.api.cambiarClave(this.claveApi);
     this.cargando.set(true);
     this.error.set('');
     this.mensaje.set('');
@@ -152,7 +149,7 @@ export class App implements OnInit {
     if (e instanceof HttpErrorResponse) {
       if (e.status === 0)
         return 'No se pudo conectar con la API. Comprueba que Spring Boot esté en el puerto 8080.';
-      if (e.status === 401) return 'La clave API no es válida.';
+      if (e.status === 401) return 'No se pudo autorizar la solicitud a la API.';
       return e.error?.error || `La solicitud falló (${e.status}).`;
     }
     return 'Ocurrió un error inesperado.';
