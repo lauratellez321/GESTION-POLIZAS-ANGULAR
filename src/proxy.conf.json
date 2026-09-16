@@ -1,0 +1,14 @@
+{
+  "/polizas": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/polizas/**": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/riesgos/**": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
+}
