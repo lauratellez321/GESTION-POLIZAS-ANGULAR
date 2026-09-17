@@ -4,14 +4,12 @@
 
 body {
   margin: 0;
-  background: #f6f8fc;
-  color: #25354d;
+  background: #f8f9f8;
+  color: #263b30;
   font-family:
-    Inter,
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
+    'Trebuchet MS',
     'Segoe UI',
+    Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -24,7 +22,7 @@ select {
 
 .eyebrow {
   margin: 0 0 9px;
-  color: #6178e5;
+  color: #087c50;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -39,7 +37,7 @@ p {
 
 h1 {
   margin-bottom: 7px;
-  color: #17243a;
+  color: #263b30;
   font-size: 34px;
   letter-spacing: -0.05em;
 }
@@ -50,10 +48,10 @@ select {
   width: 100%;
   height: 39px;
   padding: 0 12px;
-  border: 1px solid #d8e0ec;
+  border: 1px solid #d8e4db;
   border-radius: 8px;
   background: white;
-  color: #202d43;
+  color: #263b30;
   font: inherit;
   font-size: 13px;
   outline: none;
@@ -61,8 +59,8 @@ select {
 
 input:focus,
 select:focus {
-  border-color: #5974eb;
-  box-shadow: 0 0 0 3px #5974eb20;
+  border-color: #087c50;
+  box-shadow: 0 0 0 3px #087c5020;
 }
 
 .button,
@@ -93,13 +91,13 @@ select:focus {
 
 .button-quiet,
 .button-secondary {
-  background: #edf1ff;
-  color: #3455c6;
+  background: #e8f4ec;
+  color: #075d3e;
 }
 
 .button-primary {
-  background: #4e64e9;
-  color: white;
+  background: #ffe17b;
+  color: #075d3e;
 }
 
 .workspace {
@@ -111,8 +109,8 @@ select:focus {
 
 .panel {
   background: white;
-  border: 1px solid #e7ecf3;
-  box-shadow: 0 5px 22px #24395c08;
+  border: 1px solid #e6ece7;
+  box-shadow: 0 5px 22px #123d2408;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -122,7 +120,7 @@ select:focus {
 .inline-form label,
 .renew-form label {
   display: block;
-  color: #42516a;
+  color: #3b5747;
   font-size: 12px;
   font-weight: 700;
 }
@@ -145,13 +143,13 @@ select:focus {
 
 .panel-heading h2 {
   margin-bottom: 4px;
-  color: #1a273d;
+  color: #263b30;
   font-size: 19px;
 }
 
 .panel-heading p:not(.eyebrow) {
   margin: 0;
-  color: #8896a9;
+  color: #74847a;
   font-size: 12px;
 }
 
@@ -167,16 +165,16 @@ select:focus {
 }
 
 .badge-green {
-  background: #e9f8f1;
-  color: #2a9b6d;
+  background: #e5f5eb;
+  color: #087c50;
 }
 
 .badge-blue {
-  background: #eaf0ff;
-  color: #5268d3;
+  background: #fff1ba;
+  color: #65501a;
 }
 
 .badge-gray {
-  background: #edf0f4;
-  color: #778396;
+  background: #edf0ed;
+  color: #68766d;
 }

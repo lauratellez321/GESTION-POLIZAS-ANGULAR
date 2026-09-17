@@ -11,8 +11,8 @@
 
 .stat-card {
   background: white;
-  border: 1px solid #e7ecf3;
-  box-shadow: 0 5px 22px #24395c08;
+  border: 1px solid #e6ece7;
+  box-shadow: 0 5px 22px #123d2408;
 }
 
 .stat-card {
@@ -35,30 +35,30 @@
 }
 
 .icon-blue {
-  background: #edf2ff;
-  color: #4e64e9;
+  background: #fff1ba;
+  color: #075d3e;
 }
 
 .icon-green {
-  background: #e8f8f1;
-  color: #2eaf79;
+  background: #e5f5eb;
+  color: #087c50;
 }
 
 .icon-purple {
-  background: #f3edff;
-  color: #8f67d9;
+  background: #fff1ba;
+  color: #886d24;
 }
 
 .stat-card span:not(.stat-icon) {
   display: block;
-  color: #7b899e;
+  color: #74847a;
   font-size: 12px;
 }
 
 .stat-card strong {
   display: block;
   margin-top: 5px;
-  color: #18253b;
+  color: #263b30;
   font-size: 25px;
 }
 

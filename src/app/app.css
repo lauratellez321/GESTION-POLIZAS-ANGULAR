@@ -24,7 +24,7 @@
 
 .subtitle {
   margin-bottom: 0;
-  color: #69788d;
+  color: #697971;
   font-size: 14px;
 }
 
@@ -52,18 +52,18 @@
 }
 
 .alert-error {
-  background: #fff1f0;
-  color: #ad3f3e;
+  background: #fff0ee;
+  color: #a13c36;
 }
 
 .alert-success {
-  background: #e9f9f1;
-  color: #217952;
+  background: #e9f7ef;
+  color: #087c50;
 }
 
 footer {
   margin-top: 28px;
-  color: #a0acbb;
+  color: #82948a;
   text-align: center;
   font-size: 11px;
 }

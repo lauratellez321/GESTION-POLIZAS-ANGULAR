@@ -22,7 +22,7 @@
   margin: 0 25px;
   padding: 22px;
   border-radius: 11px;
-  background: #f7f9fc;
+  background: #f7f9f7;
 }
 
 .detail-grid span,
@@ -32,19 +32,19 @@
 
 .detail-grid span {
   margin-bottom: 7px;
-  color: #8b97a8;
+  color: #74847a;
   font-size: 11px;
 }
 
 .detail-grid strong {
-  color: #26354a;
+  color: #263b30;
   font-size: 12px;
 }
 
 .section-divider {
   height: 1px;
   margin: 25px 25px 20px;
-  background: #edf0f5;
+  background: #e6ece7;
 }
 
 .section-heading {
@@ -56,7 +56,7 @@
 
 .section-heading h3 {
   margin: 0;
-  color: #24334a;
+  color: #263b30;
   font-size: 14px;
 }
 
@@ -66,8 +66,8 @@
   min-width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #edf1f8;
-  color: #667790;
+  background: #e8f4ec;
+  color: #47715b;
   font-size: 10px;
   font-weight: 700;
 }
@@ -93,8 +93,8 @@
   flex: 0 0 34px;
   height: 34px;
   border-radius: 9px;
-  background: #f0f3f8;
-  color: #8190a5;
+  background: #e8f4ec;
+  color: #47715b;
   font-size: 17px;
 }
 
@@ -109,13 +109,13 @@
 }
 
 .risk-description strong {
-  color: #334257;
+  color: #3b5747;
   font-size: 12px;
 }
 
 .risk-description small {
   margin-top: 3px;
-  color: #919eae;
+  color: #74847a;
   font-size: 10px;
 }
 
@@ -128,7 +128,7 @@
 }
 
 .muted {
-  color: #8b97a8;
+  color: #74847a;
   font-size: 12px;
 }
 
@@ -146,7 +146,7 @@
 .renew-form p {
   max-width: 230px;
   margin: 4px 0 0;
-  color: #96a2b3;
+  color: #74847a;
   font-size: 11px;
   line-height: 1.4;
 }
@@ -188,21 +188,21 @@
   height: 58px;
   margin-bottom: 17px;
   border-radius: 16px;
-  background: #edf2ff;
-  color: #6b80e8;
+  background: #fff1ba;
+  color: #087c50;
   font-size: 28px;
 }
 
 .detail-empty h2 {
   margin-bottom: 7px;
-  color: #2b3951;
+  color: #263b30;
   font-size: 18px;
 }
 
 .detail-empty p {
   max-width: 280px;
   margin: 0;
-  color: #91a0b3;
+  color: #74847a;
   font-size: 12px;
   line-height: 1.6;
 }
