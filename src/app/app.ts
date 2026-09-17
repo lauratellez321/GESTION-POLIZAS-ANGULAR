@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 import { PolicyDetail } from './components/policy-detail/policy-detail';
 import { PolicyFilters, PolicyList } from './components/policy-list/policy-list';
 import { PolicySummary } from './components/policy-summary/policy-summary';
@@ -24,6 +25,29 @@ export class App implements OnInit {
   readonly guardando = signal(false);
   readonly mensaje = signal('');
   readonly error = signal('');
+  private readonly notificarError = effect(() => {
+    const texto = this.error();
+    if (!texto) return;
+    void Swal.fire({
+      icon: 'error',
+      title: 'No fue posible completar la acción',
+      text: texto,
+      confirmButtonColor: '#b33d35',
+      confirmButtonText: 'Entendido',
+    });
+  });
+
+  private readonly notificarExito = effect(() => {
+    const texto = this.mensaje();
+    if (!texto) return;
+    void Swal.fire({
+      icon: 'success',
+      title: 'Operación completada',
+      text: texto,
+      confirmButtonColor: '#087c50',
+      confirmButtonText: 'Aceptar',
+    });
+  });
 
   private tipoFiltro: TipoPoliza | '' = '';
   private estadoFiltro: EstadoPoliza | '' = '';

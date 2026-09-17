@@ -1,3 +1,4 @@
+@import 'sweetalert2/dist/sweetalert2.min.css';
 * {
   box-sizing: border-box;
 }
@@ -6,11 +7,7 @@ body {
   margin: 0;
   background: #f8f9f8;
   color: #263b30;
-  font-family:
-    'Trebuchet MS',
-    'Segoe UI',
-    Arial,
-    sans-serif;
+  font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

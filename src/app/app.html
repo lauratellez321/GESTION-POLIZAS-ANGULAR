@@ -85,19 +85,6 @@
       </form>
     </section>
 
-    @if (error()) {
-      <div class="alert alert-error" role="alert">
-        <span>{{ error() }}</span>
-        <button type="button" (click)="error.set('')" aria-label="Cerrar aviso">×</button>
-      </div>
-    }
-    @if (mensaje()) {
-      <div class="alert alert-success" role="status">
-        <span>{{ mensaje() }}</span>
-        <button type="button" (click)="mensaje.set('')" aria-label="Cerrar aviso">×</button>
-      </div>
-    }
-
     <app-policy-summary [polizas]="polizas()" />
 
     <div class="workspace">
