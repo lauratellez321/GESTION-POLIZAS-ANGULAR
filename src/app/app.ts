@@ -31,6 +31,7 @@ export class App implements OnInit {
   nuevoCanonMensual: number | null = null;
   nuevaFechaInicio = '';
   nuevosMesesVigencia: number | null = 12;
+  nuevoRiesgoInicial = '';
 
   ngOnInit(): void {
     void this.cargarPolizas();
@@ -92,6 +93,7 @@ export class App implements OnInit {
           canonMensual: this.nuevoCanonMensual!,
           inicioVigencia: this.nuevaFechaInicio,
           mesesVigencia: this.nuevosMesesVigencia!,
+          riesgoInicial: this.nuevoRiesgoInicial,
         }),
       );
       this.polizas.update((actuales) => [creada, ...actuales]);
@@ -99,6 +101,7 @@ export class App implements OnInit {
       this.riesgos.set([]);
       this.nuevoCanonMensual = null;
       this.nuevaFechaInicio = '';
+      this.nuevoRiesgoInicial = '';
       this.nuevosMesesVigencia = 12;
       this.mensaje.set(`La póliza #${creada.id} fue creada correctamente.`);
     });

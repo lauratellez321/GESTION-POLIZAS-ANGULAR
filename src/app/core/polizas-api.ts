@@ -29,6 +29,7 @@ export interface CrearPoliza {
   canonMensual: number;
   inicioVigencia: string;
   mesesVigencia: number;
+  riesgoInicial: string;
 }
 
 @Injectable({ providedIn: 'root' })
