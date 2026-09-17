@@ -27,6 +27,40 @@
   font-size: 14px;
 }
 
+.create-policy {
+  margin-bottom: 22px;
+  padding-bottom: 24px;
+}
+
+.create-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0 25px;
+}
+
+.create-form label {
+  color: #3b5747;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.create-form input,
+.create-form select {
+  margin-top: 7px;
+}
+
+.create-actions {
+  display: flex;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 850px) {
+  .create-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 .alert {
   display: flex;
   justify-content: space-between;

@@ -10,6 +10,70 @@
       </div>
     </header>
 
+    <section class="panel create-policy" aria-labelledby="create-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">REGISTRO</p>
+          <h2 id="create-title">Nueva póliza</h2>
+          <p>Ingresa la información inicial de la póliza.</p>
+        </div>
+      </div>
+
+      <form class="create-form" (ngSubmit)="crearPoliza()">
+        <label for="policy-type">
+          Tipo de póliza
+          <select id="policy-type" name="tipo" [(ngModel)]="tipoNuevaPoliza">
+            <option value="INDIVIDUAL">Individual</option>
+            <option value="COLECTIVA">Colectiva</option>
+          </select>
+        </label>
+
+        <label for="monthly-rent">
+          Canon mensual
+          <input
+            id="monthly-rent"
+            name="canonMensual"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="Ej. 1500000"
+            [(ngModel)]="nuevoCanonMensual"
+            required
+          />
+        </label>
+
+        <label for="start-date">
+          Inicio de vigencia
+          <input
+            id="start-date"
+            name="inicioVigencia"
+            type="date"
+            [(ngModel)]="nuevaFechaInicio"
+            required
+          />
+        </label>
+
+        <label for="months">
+          Meses de vigencia
+          <input
+            id="months"
+            name="mesesVigencia"
+            type="number"
+            min="1"
+            step="1"
+            [(ngModel)]="nuevosMesesVigencia"
+            required
+          />
+        </label>
+
+        <div class="create-actions">
+          <button type="submit" class="button button-primary" [disabled]="guardando()">
+            {{ guardando() ? 'Guardando...' : 'Crear póliza' }}
+          </button>
+        </div>
+      </form>
+    </section>
+
     @if (error()) {
       <div class="alert alert-error" role="alert">
         <span>{{ error() }}</span>

@@ -24,10 +24,21 @@ export interface Riesgo {
   polizaId: number;
 }
 
+export interface CrearPoliza {
+  tipo: TipoPoliza;
+  canonMensual: number;
+  inicioVigencia: string;
+  mesesVigencia: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class PolizasApi {
   private readonly http = inject(HttpClient);
   private readonly apiKey = '123456';
+
+  crear(poliza: CrearPoliza): Observable<Poliza> {
+    return this.http.post<Poliza>('/polizas', poliza, { headers: this.headers() });
+  }
 
   listar(tipo?: TipoPoliza, estado?: EstadoPoliza): Observable<Poliza[]> {
     let params = new HttpParams();

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { PolicyDetail } from './components/policy-detail/policy-detail';
 import { PolicyFilters, PolicyList } from './components/policy-list/policy-list';
@@ -9,7 +10,7 @@ import { EstadoPoliza, Poliza, PolizasApi, Riesgo, TipoPoliza } from './core/pol
 
 @Component({
   selector: 'app-root',
-  imports: [Header, PolicySummary, PolicyList, PolicyDetail],
+  imports: [FormsModule, Header, PolicySummary, PolicyList, PolicyDetail],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -26,6 +27,10 @@ export class App implements OnInit {
 
   private tipoFiltro: TipoPoliza | '' = '';
   private estadoFiltro: EstadoPoliza | '' = '';
+  tipoNuevaPoliza: TipoPoliza = 'INDIVIDUAL';
+  nuevoCanonMensual: number | null = null;
+  nuevaFechaInicio = '';
+  nuevosMesesVigencia: number | null = 12;
 
   ngOnInit(): void {
     void this.cargarPolizas();
@@ -66,6 +71,37 @@ export class App implements OnInit {
     this.riesgos.set([]);
     this.error.set('');
     await this.cargarRiesgos(poliza.id);
+  }
+
+  async crearPoliza(): Promise<void> {
+    if (
+      this.nuevoCanonMensual === null ||
+      this.nuevoCanonMensual <= 0 ||
+      !this.nuevaFechaInicio ||
+      this.nuevosMesesVigencia === null ||
+      this.nuevosMesesVigencia < 1
+    ) {
+      this.error.set('Completa los datos requeridos para crear la póliza.');
+      return;
+    }
+
+    await this.ejecutar(async () => {
+      const creada = await firstValueFrom(
+        this.api.crear({
+          tipo: this.tipoNuevaPoliza,
+          canonMensual: this.nuevoCanonMensual!,
+          inicioVigencia: this.nuevaFechaInicio,
+          mesesVigencia: this.nuevosMesesVigencia!,
+        }),
+      );
+      this.polizas.update((actuales) => [creada, ...actuales]);
+      this.seleccionada.set(creada);
+      this.riesgos.set([]);
+      this.nuevoCanonMensual = null;
+      this.nuevaFechaInicio = '';
+      this.nuevosMesesVigencia = 12;
+      this.mensaje.set(`La póliza #${creada.id} fue creada correctamente.`);
+    });
   }
 
   async renovar(ipc: number): Promise<void> {

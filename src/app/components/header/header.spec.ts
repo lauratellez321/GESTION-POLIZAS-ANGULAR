@@ -5,6 +5,6 @@ describe('Header', () => {
   it('muestra el acceso a pólizas', async () => {
     const fixture = TestBed.createComponent(Header);
     await fixture.whenStable();
-    expect(fixture.nativeElement.textContent).toContain('Pólizas');
+    expect(fixture.nativeElement.textContent).toContain('Gestión de pólizas');
   });
 });
