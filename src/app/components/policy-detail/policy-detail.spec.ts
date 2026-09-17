@@ -15,9 +15,14 @@ describe('PolicyDetail', () => {
       inicioVigencia: '2026-01-01',
       finVigencia: '2026-12-31',
     } as Poliza);
+    fixture.componentRef.setInput('riesgos', [
+      { id: 1, polizaId: 4, descripcion: 'Apartamento 303', estado: 'ACTIVO' },
+    ]);
     await fixture.whenStable();
 
     expect(fixture.nativeElement.textContent).toContain('Póliza #4');
     expect(fixture.nativeElement.textContent).toContain('31/12/2026');
+    expect(fixture.nativeElement.textContent).toContain('Cancelar póliza');
+    expect(fixture.nativeElement.textContent).not.toContain('Cancelar riesgo');
   });
 });

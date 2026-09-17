@@ -54,13 +54,14 @@
         </label>
 
         <label for="initial-risk">
-          Riesgo inicial
+          Riesgo inicial {{ tipoNuevaPoliza === 'INDIVIDUAL' ? '(obligatorio)' : '(opcional)' }}
           <input
             id="initial-risk"
             name="riesgoInicial"
             type="text"
             placeholder="Ej. Apartamento 302"
             [(ngModel)]="nuevoRiesgoInicial"
+            [required]="tipoNuevaPoliza === 'INDIVIDUAL'"
           />
         </label>
 

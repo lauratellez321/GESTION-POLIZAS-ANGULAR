@@ -109,6 +109,10 @@ export class App implements OnInit {
       this.error.set('Completa los datos requeridos para crear la póliza.');
       return;
     }
+    if (this.tipoNuevaPoliza === 'INDIVIDUAL' && !this.nuevoRiesgoInicial.trim()) {
+      this.error.set('Una póliza individual debe tener un riesgo inicial.');
+      return;
+    }
 
     await this.ejecutar(async () => {
       const creada = await firstValueFrom(
