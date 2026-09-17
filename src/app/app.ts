@@ -146,8 +146,12 @@ export class App implements OnInit {
 
   async cancelarPoliza(): Promise<void> {
     const poliza = this.seleccionada();
-    if (!poliza || !window.confirm(`¿Cancelar la póliza #${poliza.id} y todos sus riesgos?`))
-      return;
+    if (!poliza) return;
+    const confirmar = await this.confirmarCancelacion(
+      '¿Cancelar póliza?',
+      `Se cancelará la póliza #${poliza.id} y todos sus riesgos.`,
+    );
+    if (!confirmar) return;
     await this.ejecutar(async () => {
       const actualizada = await firstValueFrom(this.api.cancelar(poliza.id));
       this.reemplazarPoliza(actualizada);
@@ -170,7 +174,11 @@ export class App implements OnInit {
   }
 
   async cancelarRiesgo(riesgo: Riesgo): Promise<void> {
-    if (!window.confirm(`¿Cancelar el riesgo "${riesgo.descripcion}"?`)) return;
+    const confirmar = await this.confirmarCancelacion(
+      '¿Cancelar riesgo?',
+      `Se cancelará el riesgo “${riesgo.descripcion}”.`,
+    );
+    if (!confirmar) return;
     await this.ejecutar(async () => {
       await firstValueFrom(this.api.cancelarRiesgo(riesgo.id));
       const poliza = this.seleccionada();
@@ -206,6 +214,20 @@ export class App implements OnInit {
     } finally {
       this.guardando.set(false);
     }
+  }
+
+  private async confirmarCancelacion(titulo: string, texto: string): Promise<boolean> {
+    const resultado = await Swal.fire({
+      icon: 'warning',
+      title: titulo,
+      text: texto,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'Conservar',
+      confirmButtonColor: '#b33d35',
+      cancelButtonColor: '#687d70',
+    });
+    return resultado.isConfirmed;
   }
 
   private descripcionError(e: unknown): string {
