@@ -54,16 +54,7 @@
             >
           </div>
           @if (riesgo.estado === 'ACTIVO' && actual.estado !== 'CANCELADA') {
-            @if (actual.tipo === 'INDIVIDUAL') {
-              <button
-                type="button"
-                class="text-danger"
-                (click)="cancelarPoliza.emit()"
-                [disabled]="guardando()"
-              >
-                Cancelar póliza
-              </button>
-            } @else {
+            @if (actual.tipo !== 'INDIVIDUAL') {
               <button
                 type="button"
                 class="text-danger"

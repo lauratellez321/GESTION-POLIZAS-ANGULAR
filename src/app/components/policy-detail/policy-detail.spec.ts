@@ -22,7 +22,8 @@ describe('PolicyDetail', () => {
 
     expect(fixture.nativeElement.textContent).toContain('Póliza #4');
     expect(fixture.nativeElement.textContent).toContain('31/12/2026');
-    expect(fixture.nativeElement.textContent).toContain('Cancelar póliza');
-    expect(fixture.nativeElement.textContent).not.toContain('Cancelar riesgo');
+    const textoRiesgo = fixture.nativeElement.querySelector('.risk-row').textContent;
+    expect(textoRiesgo).not.toContain('Cancelar póliza');
+    expect(textoRiesgo).not.toContain('Cancelar riesgo');
   });
 });
